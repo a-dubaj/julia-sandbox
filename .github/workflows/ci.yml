@@ -1,0 +1,52 @@
+name: Julia CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  build:
+    name: Julia ${{ matrix.julia-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        julia-version: ["1.11", "1.12"]
+        os: [ubuntu-latest]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Julia
+        uses: julia-actions/setup-julia@v2
+        with:
+          version: ${{ matrix.julia-version }}
+
+      - name: Check syntax of all .jl files
+        run: |
+          echo "Checking Julia files..."
+          find . -name "*.jl" | while read file; do
+            echo "  -> $file"
+            julia --startup-file=no -e "
+              try
+                Base.include(Main, \"$file\")
+                println(\"OK: $file\")
+              catch e
+                println(stderr, \"FAILED: $file\")
+                println(stderr, e)
+                exit(1)
+              end
+            "
+          done
+          echo "All files OK!"
+
+      - name: Run all .jl scripts
+        run: |
+          find . -name "*.jl" | while read file; do
+            echo "Running: $file"
+            julia --startup-file=no "$file" || exit 1
+          done
