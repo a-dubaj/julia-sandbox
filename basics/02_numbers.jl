@@ -29,3 +29,8 @@ println(typeof(x))
 
 x = 1.0e-5
 println(typeof(x))
+
+# Functions example
+bitstring(1.0e15)
+nextfloat(1.0e15)
+eps(1.0)
