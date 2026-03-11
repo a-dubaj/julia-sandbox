@@ -57,3 +57,26 @@ println(v .^ 2)             # element-wise power
 println(sin.(v))            # element-wise sin
 
 @. sqrt(sin(v) + 2v + 1)    # @. covers every operator to dot version
+
+# Examples
+x = Int8(-64)
+println(bitstring(x))
+println(bitstring(x >> 1))
+println(bitstring(x >>> 1))
+
+# Dot operator exmaples
+x = [1, 2, 3]
+println(x.^2)
+println(sin.(x))
+
+# Comparasion of Numbers
+x = 0.5
+0 <= x < 1
+
+println(NaN == NaN)
+println(NaN < NaN)
+println(Inf == Inf)
+println(Inf > Inf)
+println(-0.0 == 0.0)
+println(bitstring(-0.0))
+println(bitstring(0.0))
