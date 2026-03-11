@@ -80,3 +80,9 @@ println(Inf > Inf)
 println(-0.0 == 0.0)
 println(bitstring(-0.0))
 println(bitstring(0.0))
+
+println(isequal(NaN, NaN))
+println(isequal(-0.0, 0.0))
+
+# Example
+println(isequal((1 == 3) &  (1 == 1)))  
